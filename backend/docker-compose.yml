@@ -1,0 +1,19 @@
+services:
+  postgres:
+    image: postgres:16-alpine
+    container_name: beat_store_postgres
+    restart: unless-stopped
+
+    environment:
+      POSTGRES_USER: beat_user
+      POSTGRES_PASSWORD: beat_password
+      POSTGRES_DB: beat_store
+
+    ports:
+      - "5434:5432"
+
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      
+volumes:
+  postgres_data:

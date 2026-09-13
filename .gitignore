@@ -1,0 +1,32 @@
+# Dependencies and generated output
+**/node_modules/
+**/dist/
+**/build/
+**/.next/
+**/coverage/
+**/generated/prisma/
+
+# Local environment and credentials
+**/.env
+**/.env.*
+!**/.env.example
+*.pem
+*.key
+*.p12
+
+# Local AI agent and editor state
+**/.agents/
+**/.claude/
+**/.cursor/
+**/.windsurf/
+**/.devin/
+**/.aider*
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+
+# OS and logs
+.DS_Store
+**/*.log

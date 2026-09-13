@@ -1,0 +1,33 @@
+@import "tailwindcss";
+
+@theme {
+  /* Fonts */
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+
+  /* Colors */
+  --color-bg: #0a0a0b;
+  --color-surface: #151517;
+  --color-primary: #f5f5f0;
+  --color-muted: #6b6b70;
+  --color-accent: #e8481f;
+  --color-gradient-purple: #7c3aed;
+  --color-gradient-teal: #0f9b8e;
+  --color-gradient-orange: #d9662c;
+  --color-success: #08c94f;
+
+  /* Border Radius */
+  --radius-card: 1.25rem;
+  --radius-button: 0.75rem;
+}
+
+body {
+  /* Updated to map to the variables you actually defined above */
+  background-color: var(--color-bg);
+  color: var(--color-primary);
+  font-family: var(--font-sans), sans-serif;
+}
+
+html {
+  scroll-behavior: smooth;
+}

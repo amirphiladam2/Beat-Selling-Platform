@@ -1,0 +1,108 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Get a free hosted Postgres database in seconds: `npx create-db`
+
+generator client {
+  provider = "prisma-client"
+  output   = "../generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+enum Genre {
+  RB
+  HIP_HOP
+  POP
+  ELECTRONIC
+}
+
+enum Mood {
+  ATMOSPHERIC
+  SOULFUL
+  DARK
+  CHILL
+  BRIGHT
+  EUPHORIC
+}
+
+enum LicenseType {
+  BASIC
+  PREMIUM
+  EXCLUSIVE
+}
+
+enum UserRole {
+  CUSTOMER
+  ADMIN
+}
+
+model User {
+  id        Int      @id @default(autoincrement())
+  email     String   @unique
+  password  String
+  role      UserRole @default(CUSTOMER)
+  createdAt DateTime @default(now())
+
+  orders Order[]
+}
+
+model License {
+  id       Int         @id @default(autoincrement())
+  type     LicenseType
+  price    Decimal
+  isActive Boolean     @default(true)
+
+  beatId     Int
+  beat       Beat        @relation(fields: [beatId], references: [id])
+  orderItems OrderItem[]
+}
+
+model Beat {
+  id          Int      @id @default(autoincrement())
+  title       String
+  description String?
+  genre       Genre
+  mood        Mood?
+  bpm         Int
+  featured    Boolean  @default(false)
+  audioKey    String
+  coverUrl    String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  licenses License[]
+}
+
+enum OrderStatus {
+  PENDING
+  PAID
+  FAILED
+  CANCELLED
+}
+
+model Order {
+  id        Int         @id @default(autoincrement())
+  userId    Int
+  status    OrderStatus @default(PENDING)
+  total     Decimal
+  paymentReference String? @unique
+  paidAt    DateTime?
+  createdAt DateTime    @default(now())
+  updatedAt DateTime    @updatedAt
+
+  user  User        @relation(fields: [userId], references: [id])
+  items OrderItem[]
+}
+
+model OrderItem {
+  id        Int     @id @default(autoincrement())
+  orderId   Int
+  licenseId Int
+  price     Decimal
+
+  order   Order   @relation(fields: [orderId], references: [id])
+  license License @relation(fields: [licenseId], references: [id])
+}
